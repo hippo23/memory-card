@@ -1,5 +1,7 @@
 const fetchRandomPokemon = async () => {
-  const data = await fetch("https://pokeapi.co/api/v2/pokemon/ditto", {
+  const id = Math.floor(Math.random() * 501);
+
+  const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
     mode: "cors",
   });
 
