@@ -16,6 +16,8 @@ const App = () => {
   const [gameState, setGameState] = useState(false);
 
   const fetchPokemons = async () => {
+    setPokemons([]);
+    setClickedPokemons([]);
     for (let i = 0; i < 3 + level * 3; i++) {
       const pokemonRaw = await fetchRandomPokemon();
       const pokemon = {
@@ -26,6 +28,10 @@ const App = () => {
       setPokemons((pokemons) => [...pokemons, pokemon]);
     }
   };
+
+  useEffect(() => {
+    if (clickedPokemons.length === 3 + level * 3) setLevel(level + 1);
+  }, [clickedPokemons]);
 
   useEffect(() => {
     fetchPokemons();

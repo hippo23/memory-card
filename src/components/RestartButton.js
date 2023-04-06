@@ -11,7 +11,7 @@ const RestartButton = () => {
         setGameState(true);
       }}
     >
-      HATDOG
+      Try Again
     </button>
   );
 };

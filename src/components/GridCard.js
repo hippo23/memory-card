@@ -1,9 +1,11 @@
 import React from "react";
 import { clickPokemon } from "./../logic/eventHandlers";
-import { clickedPokemonsContext } from "../App";
+import { clickedPokemonsContext, gameStateContext } from "../App";
 
 const GridCard = (props) => {
   const clickedPokemonsState = React.useContext(clickedPokemonsContext);
+  const gameStateArray = React.useContext(gameStateContext);
+  const setGameState = gameStateArray.gameState[1];
   const clickedPokemons = clickedPokemonsState.clickedPokemons[0];
   const setClickedPokemons = clickedPokemonsState.clickedPokemons[1];
   return (
@@ -14,6 +16,9 @@ const GridCard = (props) => {
 
         if (!clickedPokemons.includes(name)) {
           setClickedPokemons((clickedPokemons) => [...clickedPokemons, name]);
+        } else {
+          setGameState(false);
+          setClickedPokemons([]);
         }
       }}
       className="flex items-center justify-center bg-inherit rounded-md"

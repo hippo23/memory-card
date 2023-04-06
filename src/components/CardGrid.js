@@ -4,12 +4,8 @@ import React from "react";
 
 const CardGrid = () => {
   const pokemons = React.useContext(pokemonContext);
-  const cards = pokemons.map((pokemon) => (
-    <GridCard
-      key={pokemon.name}
-      name={pokemon.name}
-      src={pokemon.image}
-    ></GridCard>
+  const cards = pokemons.map((pokemon, index) => (
+    <GridCard key={index} name={pokemon.name} src={pokemon.image}></GridCard>
   ));
   return (
     <div className="flex items-center justify-center w-3/4 bg-black h-5/6">
