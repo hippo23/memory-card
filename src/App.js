@@ -8,24 +8,35 @@ import { useState, useEffect } from "react";
 export const pokemonContext = React.createContext();
 export const clickedPokemonsContext = React.createContext();
 export const gameStateContext = React.createContext();
+export const levelContext = React.createContext();
 
 const App = () => {
   const [pokemons, setPokemons] = useState([]);
   const [clickedPokemons, setClickedPokemons] = useState([]);
   const [level, setLevel] = useState(0);
-  const [gameState, setGameState] = useState(false);
+  const [gameState, setGameState] = useState(true);
 
   const fetchPokemons = async () => {
     setPokemons([]);
     setClickedPokemons([]);
+    let tempPokemons = [];
     for (let i = 0; i < 3 + level * 3; i++) {
       const pokemonRaw = await fetchRandomPokemon();
       const pokemon = {
         name: pokemonRaw.name,
         image: pokemonRaw.sprites.front_default,
       };
-      console.log(pokemon);
-      setPokemons((pokemons) => [...pokemons, pokemon]);
+      if (
+        i === 0 ||
+        !tempPokemons.some((e) => {
+          return e === pokemon.name;
+        })
+      ) {
+        setPokemons((pokemons) => [...pokemons, pokemon]);
+        tempPokemons.push(pokemon.name);
+      } else {
+        i--;
+      }
     }
   };
 
@@ -34,26 +45,28 @@ const App = () => {
   }, [clickedPokemons]);
 
   useEffect(() => {
-    fetchPokemons();
-  }, [level]);
+    if (gameState) fetchPokemons();
+  }, [level, gameState]);
 
-  useEffect(() => {
-    console.log(clickedPokemons);
-  }, [clickedPokemons]);
+  useEffect(() => {}, [clickedPokemons]);
 
   return (
     <div
       className={`w-screen h-auto min-h-screen bg-black grid grid-cols-1 grid-rows-6`}
     >
       <MenuBar></MenuBar>
-      <pokemonContext.Provider value={pokemons}>
+      <pokemonContext.Provider value={{ pokemons: [pokemons, setPokemons] }}>
         <clickedPokemonsContext.Provider
           value={{ clickedPokemons: [clickedPokemons, setClickedPokemons] }}
         >
           <gameStateContext.Provider
             value={{ gameState: [gameState, setGameState] }}
           >
-            <GameBar></GameBar>
+            <levelContext.Provider
+              value={{ levelContextArray: [level, setLevel] }}
+            >
+              <GameBar></GameBar>
+            </levelContext.Provider>
           </gameStateContext.Provider>
         </clickedPokemonsContext.Provider>
       </pokemonContext.Provider>

@@ -1,5 +1,4 @@
 import React from "react";
-import { clickPokemon } from "./../logic/eventHandlers";
 import { clickedPokemonsContext, gameStateContext } from "../App";
 
 const GridCard = (props) => {
@@ -18,7 +17,6 @@ const GridCard = (props) => {
           setClickedPokemons((clickedPokemons) => [...clickedPokemons, name]);
         } else {
           setGameState(false);
-          setClickedPokemons([]);
         }
       }}
       className="flex items-center justify-center bg-inherit rounded-md"
