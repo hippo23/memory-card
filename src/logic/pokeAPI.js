@@ -9,15 +9,4 @@ const fetchRandomPokemon = async () => {
   return obj;
 };
 
-const containsObject = (obj, list) => {
-  var x;
-  for (x in list) {
-    if (list.hasOwnProperty(x) && list[x] === obj) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-export { fetchRandomPokemon, containsObject };
+export { fetchRandomPokemon };

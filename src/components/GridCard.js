@@ -1,7 +1,14 @@
 import React from "react";
-import { clickedPokemonsContext, gameStateContext } from "../App";
+import {
+  pokemonContext,
+  clickedPokemonsContext,
+  gameStateContext,
+} from "../App";
+import { shuffle } from "./../logic/algorithms";
 
 const GridCard = (props) => {
+  const pokemonsValue = React.useContext(pokemonContext).pokemons[0];
+  const setPokemons = React.useContext(pokemonContext).pokemons[1];
   const clickedPokemonsState = React.useContext(clickedPokemonsContext);
   const gameStateArray = React.useContext(gameStateContext);
   const setGameState = gameStateArray.gameState[1];
@@ -15,6 +22,7 @@ const GridCard = (props) => {
 
         if (!clickedPokemons.includes(name)) {
           setClickedPokemons((clickedPokemons) => [...clickedPokemons, name]);
+          setPokemons(shuffle(pokemonsValue));
         } else {
           setGameState(false);
         }
